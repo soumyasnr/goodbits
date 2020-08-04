@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Hello</title>
+
+</head>
+
+<body>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  try {
+    	// We can get the token from the "access_token" query
+    	// param, available in the browsers "location" global
+    	const query = window.location.search.substring(1)
+    	const token = query.split('access_token=')[1]
+
+      $.ajax({
+         url: "https://api.github.com/user",
+         type: "GET",
+         headers: {
+           // "accept": "application/vnd.github.v3+json",
+           "Authorization": 'token ' + token
+         },
+         success: function(res) {
+           const nameNode = document.createTextNode('Welcome, '+res.login)
+           document.body.appendChild(nameNode)
+         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           const errorNode = document.createTextNode('Oops! Something went wrong')
+           document.body.appendChild(errorNode)
+           console.log("Status: " + textStatus);
+           console.log("Error: " + errorThrown);
+         }
+      });
+
+  }
+  catch(err) {
+    const errorNode1 = document.createTextNode('Oops! Something went wrong')
+    document.body.appendChild(errorNode1)
+    console.log(err.message);
+  }
+
+</script>
+
+</html>
